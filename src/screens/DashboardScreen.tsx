@@ -8,6 +8,9 @@ import Svg, {
   Circle,
   Rect,
 } from "react-native-svg";
+import { LinearGradient as ExpoLinearGradient } from "expo-linear-gradient";
+import MaskedView from "@react-native-masked-view/masked-view";
+import { BulletList } from "../components/BulletList";
 
 interface DashboardScreenProps {
   // Add any props you need here
@@ -167,7 +170,7 @@ const styles = {
     fontFamily: FONTS.inter,
     fontWeight: 900,
     lineHeight: 20,
-  }
+  },
 } as const;
 
 // SVG Components
@@ -780,6 +783,29 @@ const CheckboxIcon = ({
   </Svg>
 );
 
+// Gradient text component using masked view
+const GradientText = ({
+	children,
+	style,
+}: {
+	children: React.ReactNode;
+	style?: any;
+}) => (
+	<MaskedView
+		maskElement={
+			<Text style={[style, { backgroundColor: "transparent" }]}>{children}</Text>
+		}
+	>
+		<ExpoLinearGradient
+			colors={["#00E1E1", "#24BABB"]}
+			start={{ x: 0, y: 0 }}
+			end={{ x: 1, y: 0 }}
+		>
+			<Text style={[style, { opacity: 0 }]}>{children}</Text>
+		</ExpoLinearGradient>
+	</MaskedView>
+);
+
 export default function DashboardScreen(props: DashboardScreenProps) {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -1170,121 +1196,159 @@ export default function DashboardScreen(props: DashboardScreenProps) {
               {/* Nhiệm vụ hôm nay */}
               <View style={[styles.frameContainerShadowA]}>
                 <View style={styles.frameContainerShadowB}>
-              <View
-                style={{
-                  backgroundColor: "#FFF3D1",
-                  borderRadius: 12,
-                  gap: 12,
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: 16,
-                    paddingBottom: 0,
-                  }}
-                >
                   <View
                     style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 8,
+                      backgroundColor: "#FFF3D1",
+                      borderRadius: 12,
+                      gap: 12,
                     }}
                   >
-                    <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      <Path
-                        d="M8.37671 15.6164L2.71986 21.2732M11.6944 6.64188L10.1335 8.20276C10.0062 8.33009 9.94252 8.39375 9.86999 8.44433C9.80561 8.48923 9.73617 8.5264 9.6631 8.55506C9.58078 8.58735 9.49249 8.60501 9.31593 8.64032L5.65146 9.37321C4.69916 9.56367 4.22301 9.6589 4.00025 9.90996C3.80618 10.1287 3.71756 10.4214 3.75771 10.711C3.8038 11.0434 4.14716 11.3868 4.83388 12.0735L11.9196 19.1593C12.6063 19.846 12.9497 20.1893 13.2821 20.2354C13.5718 20.2756 13.8645 20.1869 14.0832 19.9929C14.3342 19.7701 14.4295 19.294 14.6199 18.3417L15.3528 14.6772C15.3881 14.5006 15.4058 14.4124 15.4381 14.33C15.4667 14.257 15.5039 14.1875 15.5488 14.1231C15.5994 14.0506 15.663 13.9869 15.7904 13.8596L17.3513 12.2987C17.4327 12.2173 17.4734 12.1766 17.5181 12.1411C17.5578 12.1095 17.5999 12.081 17.644 12.0558C17.6936 12.0275 17.7465 12.0048 17.8524 11.9595L20.3467 10.8905C21.0744 10.5786 21.4383 10.4227 21.6035 10.1707C21.7481 9.95031 21.7998 9.68181 21.7474 9.42354C21.6875 9.12819 21.4076 8.84828 20.8478 8.28846L15.7047 3.14532C15.1448 2.58549 14.8649 2.30558 14.5696 2.24571C14.3113 2.19335 14.0428 2.24506 13.8225 2.38959C13.5705 2.55487 13.4145 2.91872 13.1027 3.64642L12.0337 6.14078C11.9883 6.24659 11.9656 6.2995 11.9373 6.34911C11.9121 6.39319 11.8836 6.43528 11.852 6.47503C11.8165 6.51977 11.7758 6.56047 11.6944 6.64188Z"
-                        stroke="#F04438"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </Svg>
-                    <Text style={styles.frameTitleBold}>Nhiệm vụ hôm nay</Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 8,
-                    }}
-                  >
-                    <Svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                      <Path
-                        d="M7.33332 12.6667V8.66669H3.33332C2.96513 8.66669 2.66666 8.36821 2.66666 8.00002C2.66666 7.63183 2.96513 7.33335 3.33332 7.33335H7.33332V3.33335C7.33332 2.96516 7.6318 2.66669 7.99999 2.66669C8.36818 2.66669 8.66666 2.96516 8.66666 3.33335V7.33335H12.6667C13.0348 7.33335 13.3333 7.63183 13.3333 8.00002C13.3333 8.36821 13.0348 8.66669 12.6667 8.66669H8.66666V12.6667C8.66666 13.0349 8.36818 13.3334 7.99999 13.3334C7.6318 13.3334 7.33332 13.0349 7.33332 12.6667Z"
-                        fill="#3B76DA"
-                      />
-                    </Svg>
-                    <Text style={styles.titleHref}>Thêm nhiệm vụ</Text>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        padding: 16,
+                        paddingBottom: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          gap: 8,
+                        }}
+                      >
+                        <Svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <Path
+                            d="M8.37671 15.6164L2.71986 21.2732M11.6944 6.64188L10.1335 8.20276C10.0062 8.33009 9.94252 8.39375 9.86999 8.44433C9.80561 8.48923 9.73617 8.5264 9.6631 8.55506C9.58078 8.58735 9.49249 8.60501 9.31593 8.64032L5.65146 9.37321C4.69916 9.56367 4.22301 9.6589 4.00025 9.90996C3.80618 10.1287 3.71756 10.4214 3.75771 10.711C3.8038 11.0434 4.14716 11.3868 4.83388 12.0735L11.9196 19.1593C12.6063 19.846 12.9497 20.1893 13.2821 20.2354C13.5718 20.2756 13.8645 20.1869 14.0832 19.9929C14.3342 19.7701 14.4295 19.294 14.6199 18.3417L15.3528 14.6772C15.3881 14.5006 15.4058 14.4124 15.4381 14.33C15.4667 14.257 15.5039 14.1875 15.5488 14.1231C15.5994 14.0506 15.663 13.9869 15.7904 13.8596L17.3513 12.2987C17.4327 12.2173 17.4734 12.1766 17.5181 12.1411C17.5578 12.1095 17.5999 12.081 17.644 12.0558C17.6936 12.0275 17.7465 12.0048 17.8524 11.9595L20.3467 10.8905C21.0744 10.5786 21.4383 10.4227 21.6035 10.1707C21.7481 9.95031 21.7998 9.68181 21.7474 9.42354C21.6875 9.12819 21.4076 8.84828 20.8478 8.28846L15.7047 3.14532C15.1448 2.58549 14.8649 2.30558 14.5696 2.24571C14.3113 2.19335 14.0428 2.24506 13.8225 2.38959C13.5705 2.55487 13.4145 2.91872 13.1027 3.64642L12.0337 6.14078C11.9883 6.24659 11.9656 6.2995 11.9373 6.34911C11.9121 6.39319 11.8836 6.43528 11.852 6.47503C11.8165 6.51977 11.7758 6.56047 11.6944 6.64188Z"
+                            stroke="#F04438"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </Svg>
+                        <Text style={styles.frameTitleBold}>
+                          Nhiệm vụ hôm nay
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          gap: 8,
+                        }}
+                      >
+                        <Svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                        >
+                          <Path
+                            d="M7.33332 12.6667V8.66669H3.33332C2.96513 8.66669 2.66666 8.36821 2.66666 8.00002C2.66666 7.63183 2.96513 7.33335 3.33332 7.33335H7.33332V3.33335C7.33332 2.96516 7.6318 2.66669 7.99999 2.66669C8.36818 2.66669 8.66666 2.96516 8.66666 3.33335V7.33335H12.6667C13.0348 7.33335 13.3333 7.63183 13.3333 8.00002C13.3333 8.36821 13.0348 8.66669 12.6667 8.66669H8.66666V12.6667C8.66666 13.0349 8.36818 13.3334 7.99999 13.3334C7.6318 13.3334 7.33332 13.0349 7.33332 12.6667Z"
+                            fill="#3B76DA"
+                          />
+                        </Svg>
+                        <Text style={styles.titleHref}>Thêm nhiệm vụ</Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        padding: 16,
+                        gap: 12,
+                        paddingTop: 0,
+                        paddingBottom: 0,
+                      }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          borderRadius: 4,
+                        }}
+                      >
+                        <CheckboxIcon checked={false} size={20} />
+                        <Text style={styles.titleCheckBox}>
+                          Kiểm kê kho cuối ngày
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          borderRadius: 4,
+                        }}
+                      >
+                        <CheckboxIcon checked={false} size={20} />
+                        <Text style={styles.titleCheckBox}>
+                          Bàn giao công việc cho ca sau
+                        </Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          borderRadius: 4,
+                        }}
+                      >
+                        <CheckboxIcon checked={false} size={20} />
+                        <Text style={styles.titleCheckBox}>
+                          Ghi nhận KPI khách hàng phản hồi
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={{ padding: 16, paddingTop: 0 }}>
+                      <Text style={styles.titleHref}>Xem thêm</Text>
+                    </View>
                   </View>
                 </View>
-                <View
-                  style={{
-                    padding: 16,
-                    gap: 12,
-                    paddingTop: 0,
-                    paddingBottom: 0,
-                  }}
-                >
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      borderRadius: 4,
-                    }}
-                  >
-                    <CheckboxIcon checked={false} size={20} />
-                    <Text style={styles.titleCheckBox}>
-                      Kiểm kê kho cuối ngày
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      borderRadius: 4,
-                    }}
-                  >
-                    <CheckboxIcon checked={false} size={20} />
-                    <Text style={styles.titleCheckBox}>
-                      Bàn giao công việc cho ca sau
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      borderRadius: 4,
-                    }}
-                  >
-                    <CheckboxIcon checked={false} size={20} />
-                    <Text style={styles.titleCheckBox}>
-                      Ghi nhận KPI khách hàng phản hồi
-                    </Text>
-                  </View>
-                </View>
-                <View style={{ padding: 16, paddingTop: 0 }}>
-                  <Text style={styles.titleHref}>Xem thêm</Text>
-                </View>
-              </View>
-              </View>
               </View>
 
               {/* Thống kê */}
               <View style={[styles.frameContainerShadowA]}>
                 <View style={styles.frameContainerShadowB}>
-                  <View style={[styles.frameContainer, { gap: 12}]}>
+                  <View style={[styles.frameContainer, { gap: 12 }]}>
                     <View>
                       <Text style={styles.frameTitleBold}>Thống kê</Text>
                     </View>
 
-                    <View style={{ gap: 12}}>
-                      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 12}}>
+                    <View style={{ gap: 12 }}>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          gap: 12,
+                        }}
+                      >
                         {/* Số ca làm */}
-                        <View style={{flex: 1, borderRadius: 12, backgroundColor: '#F5F8FD', paddingLeft: 12, paddingTop: 12, paddingBottom: 12, gap: 4}}>
-                          <View style={{ padding: 10, gap: 10, width: 40, height: 40, borderRadius: 25, backgroundColor: '#D8E4F8' }}>
+                        <View
+                          style={{
+                            flex: 1,
+                            borderRadius: 12,
+                            backgroundColor: "#F5F8FD",
+                            paddingLeft: 12,
+                            paddingTop: 12,
+                            paddingBottom: 12,
+                            gap: 4,
+                          }}
+                        >
+                          <View
+                            style={{
+                              padding: 10,
+                              gap: 10,
+                              width: 40,
+                              height: 40,
+                              borderRadius: 25,
+                              backgroundColor: "#D8E4F8",
+                            }}
+                          >
                             <Svg
                               width="20"
                               height="20"
@@ -1323,7 +1387,7 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                               />
                             </Svg>
                           </View>
-                            <Text style={styles.frameTitleSmall}>Số ca làm</Text>
+                          <Text style={styles.frameTitleSmall}>Số ca làm</Text>
                           <View
                             style={{
                               flexDirection: "row",
@@ -1339,8 +1403,28 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                         </View>
 
                         {/* Công việc hoàn thành */}
-                        <View style={{flex: 1, borderRadius: 12, backgroundColor: '#E7F8F0', paddingLeft: 12, paddingTop: 12, paddingBottom: 12, paddingRight: 20, gap: 4}}>
-                          <View style={{ padding: 10, gap: 10, width: 40, height: 40, borderRadius: 25, backgroundColor: '#D0F1E1' }}>
+                        <View
+                          style={{
+                            flex: 1,
+                            borderRadius: 12,
+                            backgroundColor: "#E7F8F0",
+                            paddingLeft: 12,
+                            paddingTop: 12,
+                            paddingBottom: 12,
+                            paddingRight: 20,
+                            gap: 4,
+                          }}
+                        >
+                          <View
+                            style={{
+                              padding: 10,
+                              gap: 10,
+                              width: 40,
+                              height: 40,
+                              borderRadius: 25,
+                              backgroundColor: "#D0F1E1",
+                            }}
+                          >
                             <Svg
                               width="20"
                               height="20"
@@ -1365,13 +1449,31 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                               />
                             </Svg>
                           </View>
-                            <Text style={styles.frameTitleSmall}>Công việc hoàn thành</Text>
-                            <Text style={styles.title900Dark}>20</Text>
+                          <Text style={styles.frameTitleSmall}>
+                            Công việc hoàn thành
+                          </Text>
+                          <Text style={styles.title900Dark}>20</Text>
                         </View>
                       </View>
                       <View>
-                        <View style={{borderRadius: 12, backgroundColor: '#FFF9E7', padding: 16, gap: 4}}>
-                          <View style={{ padding: 10, gap: 10, width: 40, height: 40, borderRadius: 25, backgroundColor: '#FFECB8' }}>
+                        <View
+                          style={{
+                            borderRadius: 12,
+                            backgroundColor: "#FFF9E7",
+                            padding: 16,
+                            gap: 4,
+                          }}
+                        >
+                          <View
+                            style={{
+                              padding: 10,
+                              gap: 10,
+                              width: 40,
+                              height: 40,
+                              borderRadius: 25,
+                              backgroundColor: "#FFECB8",
+                            }}
+                          >
                             <Svg
                               width="20"
                               height="20"
@@ -1387,7 +1489,14 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                             </Svg>
                           </View>
                           <Text>Lương tích lũy</Text>
-                          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 4}}>
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              gap: 4,
+                            }}
+                          >
                             <Text style={styles.title900Dark}>2,760,000</Text>
                             <Text style={styles.titleHref}>Xem tổng quan</Text>
                           </View>
@@ -1395,6 +1504,132 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                       </View>
                     </View>
                   </View>
+                </View>
+              </View>
+
+              <View style={styles.frameContainerShadowA}>
+                <View style={styles.frameContainerShadowB}>
+                  <ExpoLinearGradient
+                    colors={["#00E1E1", "#24BABB"]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={{ borderRadius: 12, padding: 1, overflow: "hidden" }}
+                  >
+                    <View
+                      style={[
+                        styles.frameContainer,
+                        {
+                          gap: 12,
+                          paddingTop: 16,
+                          paddingBottom: 16,
+                          borderRadius: 12,
+                          backgroundColor: "#F5FFFF",
+                        },
+                      ]}
+                    >
+                      {/* Lộ trình thăng tiến */}
+                      <View>
+                        <View>
+                          <Text style={[styles.frameTitleBold, {paddingLeft: 16}]}>
+                            Lộ trình thăng tiến
+                          </Text>
+                        </View>
+                      </View>
+
+                      {/* Thông tin thăng tiến */}
+                      <View style={{gap: 8}}>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                          <Text style={[styles.frameTitleSmall, {fontWeight: 700}]}>Vị trí hiện tại</Text>
+                          <Text style={[styles.frameTitleSmall, {fontWeight: 700}]}>Nhân viên phục vụ</Text>
+                        </View>
+
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                          <Text style={[styles.frameTitleSmall, {fontWeight: 700}]}>Mục tiêu tiếp theo</Text>
+                          <Text style={[styles.frameTitleSmall, {fontWeight: 700}]}>Tổ trưởng</Text>
+                        </View>
+
+                        <View style={{gap: 12, paddingTop: 12, paddingLeft: 4, borderTopWidth: 1, borderTopColor: '#F2F4F7'}}>
+                          <Text style={[styles.frameTitleBold, {paddingLeft: 10, fontSize: 14}]}>Yêu cầu</Text>
+                          <BulletList
+                            items={[
+                              '90% ca đúng giờ / 30 ngày',
+                              'Không bị phản ánh',
+                              'Năng lực > 80 điểm',
+                            ]}
+                            bulletColor="#6C737F"
+                            bulletSize={6}
+                            gapBetweenItems={12}
+                            bulletTopOffset={6}
+                            textStyle={{color: '#6C737F'}}
+                          />
+                        </View>
+                        <View style={{gap: 12, paddingTop: 12, paddingLeft: 4, borderTopWidth: 1, borderTopColor: '#F2F4F7'}}>
+                          <Text style={[styles.frameTitleBold, {paddingLeft: 10, fontSize: 14}]}>Gợi ý từ AI</Text>
+                          <BulletList
+                            items={[
+                              'Còn thiếu 2 ca đúng giờ',
+                              'Còn thiếu 8 điểm năng lực',
+                            ]}
+                            bulletColor="#6C737F"
+                            bulletSize={6}
+                            gapBetweenItems={12}
+                            bulletTopOffset={6}
+                            textStyle={{color: '#6C737F'}}
+                          />
+                        </View>
+                      </View>
+
+                      {/* View chi tiết */}
+                      <View style={{paddingTop: 12, paddingBottom: 12, borderTopWidth: 1, borderTopColor: '#F2F4F7'}}>
+                        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4}}>
+                          <Svg
+                            width="17"
+                            height="16"
+                            viewBox="0 0 17 16"
+                            fill="none"
+                          >
+                            <Path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M5.01695 3.50004H11.9831C12.5273 3.50004 12.9662 3.50003 13.3217 3.52919C13.6876 3.55922 14.009 3.62266 14.3061 3.7748C14.773 4.01387 15.1528 4.39373 15.3919 4.8606C15.5441 5.15774 15.6075 5.47911 15.6375 5.84506C15.6667 6.20048 15.6667 6.63944 15.6667 7.18367V7.20514C15.6667 7.22421 15.6667 7.24342 15.6668 7.26273C15.6674 7.48811 15.6681 7.72809 15.5811 7.94264C15.5063 8.12686 15.3858 8.28894 15.2308 8.41347C15.1601 8.47027 15.0818 8.51531 14.9997 8.55293C14.9977 9.62777 14.984 10.7139 14.8875 11.6443C14.8309 12.1905 14.744 12.7032 14.6062 13.1404C14.4706 13.5705 14.2704 13.9777 13.9535 14.2594C13.4046 14.7473 12.7136 14.9625 11.8512 15.0655C11.0045 15.1667 9.91943 15.1667 8.53414 15.1667H8.46587C7.08058 15.1667 5.99547 15.1667 5.14886 15.0655C4.28638 14.9625 3.59546 14.7473 3.0465 14.2594C2.72961 13.9777 2.52941 13.5705 2.39383 13.1404C2.25601 12.7032 2.16912 12.1905 2.11251 11.6443C2.01605 10.7139 2.00229 9.62777 2.00033 8.55293C1.91824 8.51531 1.83994 8.47027 1.76924 8.41347C1.61426 8.28894 1.49368 8.12687 1.41893 7.94264C1.33188 7.72809 1.33258 7.48811 1.33323 7.26272C1.33328 7.24342 1.33334 7.22421 1.33334 7.20514L1.33334 7.18365C1.33333 6.63943 1.33333 6.20047 1.36249 5.84506C1.39251 5.47911 1.45595 5.15774 1.6081 4.8606C1.84717 4.39373 2.22702 4.01387 2.6939 3.7748C2.99104 3.62265 3.31241 3.55922 3.67836 3.52919C4.03377 3.50003 4.47272 3.50004 5.01695 3.50004ZM3.0014 8.87247C3.00594 9.83036 3.02522 10.7506 3.10718 11.5412C3.16039 12.0546 3.23826 12.493 3.34757 12.8398C3.45912 13.1936 3.58842 13.4031 3.71087 13.512C4.04059 13.805 4.49612 13.9804 5.26752 14.0726C6.04786 14.1659 7.07319 14.1667 8.50001 14.1667C9.92682 14.1667 10.9522 14.1659 11.7325 14.0726C12.5039 13.9804 12.9594 13.805 13.2891 13.512C13.4116 13.4031 13.5409 13.1936 13.6524 12.8398C13.7618 12.493 13.8396 12.0546 13.8928 11.5412C13.9748 10.7506 13.9941 9.83036 13.9986 8.87247L10.6667 9.87206V10.1077C10.6667 10.4485 10.4592 10.7549 10.1428 10.8814L9.67608 11.0681C8.92111 11.3701 8.0789 11.3701 7.32393 11.0681L6.85718 10.8814C6.5408 10.7549 6.33334 10.4485 6.33334 10.1077V9.87206L3.0014 8.87247ZM6.33334 8.82803L2.73839 7.74954C2.59477 7.70646 2.51178 7.68126 2.45094 7.65822C2.41364 7.6441 2.39879 7.6358 2.39493 7.63339C2.37334 7.61586 2.35649 7.5932 2.3459 7.56749C2.3447 7.5631 2.34102 7.54649 2.33821 7.50671C2.33363 7.44182 2.33334 7.35508 2.33334 7.20514C2.33334 6.6344 2.33373 6.23654 2.35914 5.92684C2.38407 5.62301 2.43054 5.44852 2.4982 5.31638C2.64164 5.03625 2.86955 4.80834 3.14968 4.6649C3.28182 4.59724 3.45631 4.55077 3.76013 4.52584C4.06983 4.50043 4.46769 4.50004 5.03844 4.50004H11.9616C12.5323 4.50004 12.9302 4.50043 13.2399 4.52584C13.5437 4.55077 13.7182 4.59724 13.8503 4.6649C14.1305 4.80834 14.3584 5.03625 14.5018 5.31638C14.5695 5.44852 14.6159 5.62301 14.6409 5.92684C14.6663 6.23654 14.6667 6.6344 14.6667 7.20514C14.6667 7.35508 14.6664 7.44182 14.6618 7.50671C14.659 7.54648 14.6553 7.56309 14.6541 7.56749C14.6435 7.5932 14.6267 7.61586 14.6051 7.63339C14.6012 7.63579 14.5864 7.64409 14.5491 7.65822C14.4882 7.68126 14.4052 7.70646 14.2616 7.74954L10.6667 8.82803V8.66671C10.6667 8.20647 10.2936 7.83337 9.83334 7.83337H7.16667C6.70644 7.83337 6.33334 8.20647 6.33334 8.66671V8.82803ZM14.6062 7.63265L14.6051 7.63339L14.6062 7.63265ZM14.6537 7.56875L14.6541 7.56749L14.6537 7.56875ZM2.34629 7.56875L2.3459 7.56749L2.34629 7.56875ZM2.39384 7.63265L2.39493 7.63339L2.39384 7.63265ZM7.33334 8.83337V9.99486L7.69533 10.1397C8.21188 10.3463 8.78813 10.3463 9.30469 10.1397L9.66667 9.99486V8.83337H7.33334Z"
+                              fill="url(#paint0_linear_1_1000)"
+                            />
+                            <Path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M8.50013 1.83337C7.84781 1.83337 7.29151 2.25006 7.08536 2.83333C6.99334 3.09369 6.70767 3.23015 6.44732 3.13813C6.18696 3.0461 6.0505 2.76044 6.14252 2.50008C6.48548 1.52976 7.41084 0.833374 8.50013 0.833374C9.58943 0.833374 10.5148 1.52977 10.8578 2.50008C10.9498 2.76044 10.8133 3.0461 10.553 3.13813C10.2926 3.23015 10.0069 3.09369 9.91491 2.83333C9.70875 2.25006 9.15246 1.83337 8.50013 1.83337Z"
+                              fill="url(#paint1_linear_1_1000)"
+                            />
+                            <Defs>
+                              <LinearGradient
+                                id="paint0_linear_1_1000"
+                                x1="12.0835"
+                                y1="0.833374"
+                                x2="5.18235"
+                                y2="15.1669"
+                                gradientUnits="userSpaceOnUse"
+                              >
+                                <Stop stopColor="#00E1E1" />
+                                <Stop offset="1" stopColor="#24BABB" />
+                              </LinearGradient>
+                              <LinearGradient
+                                id="paint1_linear_1_1000"
+                                x1="12.0835"
+                                y1="0.833374"
+                                x2="5.18235"
+                                y2="15.1669"
+                                gradientUnits="userSpaceOnUse"
+                              >
+                                <Stop stopColor="#00E1E1" />
+                                <Stop offset="1" stopColor="#24BABB" />
+                              </LinearGradient>
+                            </Defs>
+                          </Svg>
+                            <GradientText style={[styles.titleHref]}>Xem chi tiết lộ trình</GradientText>
+                        </View>
+                      </View>
+                    </View>
+                  </ExpoLinearGradient>
                 </View>
               </View>
             </View>
