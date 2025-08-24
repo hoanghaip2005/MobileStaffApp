@@ -239,7 +239,7 @@ export default function FaceIDAttendanceScreen() {
 
         {/* Notification Success */}
 
-        <View style={{ paddingVertical: 68, gap: 10 }}>
+        <View style={{ paddingVertical: 68, gap: 10, display: "none" }}>
           <View style={{ gap: 6 }}>
             <View
               style={{
@@ -288,6 +288,50 @@ export default function FaceIDAttendanceScreen() {
           >
             Chúc bạn một ca làm tốt!
           </Text>
+        </View>
+
+        {/* Notification Failed */}
+
+        <View style={{ paddingVertical: 68, gap: 10 }}>
+          <View style={{ gap: 6 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 8,
+                justifyContent: "center",
+              }}
+            >
+              <Svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <Path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M4.42651 8.96791C6.85847 4.65597 8.07446 2.5 10.0001 2.5C11.9257 2.5 13.1417 4.65597 15.5737 8.96791L15.8767 9.50522C17.8977 13.0884 18.9081 14.88 17.9949 16.19C17.0816 17.5 14.8221 17.5 10.3031 17.5H9.69703C5.17805 17.5 2.91856 17.5 2.0053 16.19C1.09203 14.88 2.10251 13.0884 4.12346 9.50523L4.42651 8.96791ZM10.0001 6.04167C10.3453 6.04167 10.6251 6.32149 10.6251 6.66667V10.8333C10.6251 11.1785 10.3453 11.4583 10.0001 11.4583C9.6549 11.4583 9.37508 11.1785 9.37508 10.8333V6.66667C9.37508 6.32149 9.6549 6.04167 10.0001 6.04167ZM10.0001 14.1667C10.4603 14.1667 10.8334 13.7936 10.8334 13.3333C10.8334 12.8731 10.4603 12.5 10.0001 12.5C9.53984 12.5 9.16675 12.8731 9.16675 13.3333C9.16675 13.7936 9.53984 14.1667 10.0001 14.1667Z"
+                  fill="#FFC013"
+                />
+              </Svg>
+
+              <Text
+                style={{
+                  fontFamily: FONTS.interSemiBold,
+                  fontSize: 16,
+                  color: "#111927",
+                }}
+              >
+                Không thành công
+              </Text>
+            </View>
+            <Text
+              style={{
+                fontFamily: FONTS.interMedium,
+                fontSize: 14,
+                color: "#667085",
+                textAlign: "center",
+              }}
+            >
+              Di chuyển về nơi sáng, giữ mặt trong khung tròn
+            </Text>
+          </View>
         </View>
       </View>
 
@@ -339,6 +383,7 @@ export default function FaceIDAttendanceScreen() {
           paddingHorizontal: 16,
           paddingBottom: 20,
           paddingTop: 16,
+          display: "none",
         }}
       >
         <TouchableOpacity
@@ -370,6 +415,49 @@ export default function FaceIDAttendanceScreen() {
             }}
           >
             Xem nhiệm vụ hôm nay
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Nút báo lỗi FaceID */}
+
+      <View
+        style={{
+          paddingHorizontal: 16,
+          paddingBottom: 20,
+          paddingTop: 16,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{
+            backgroundColor: "#fff",
+            paddingHorizontal: 14,
+            paddingVertical: 10,
+            borderRadius: 8,
+            alignItems: "center",
+            justifyContent: "center",
+            borderWidth: 1,
+            borderColor: "#093762",
+            shadowColor: "#101828",
+            shadowOffset: {
+              width: 0,
+              height: 0.1,
+            },
+            shadowOpacity: 0.01,
+            shadowRadius: 1,
+            elevation: 1,
+            display: "none",
+          }}
+        >
+          <Text
+            style={{
+              color: "#093762",
+              fontFamily: FONTS.interMedium,
+              fontSize: 14,
+            }}
+          >
+            Báo lỗi FaceID
           </Text>
         </TouchableOpacity>
       </View>
