@@ -6,12 +6,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import DashboardScreen from '../screens/DashboardScreen';
 import CareerRoadmapScreen from '../screens/CareerRoadmapScreen';
 import GPSAttendanceScreen from '../screens/GPSAttendanceScreen';
+import FaceIDAttendanceScreen from '../screens/FaceIDAttendanceScreen';
 
 // Define stack navigator types
 export type RootStackParamList = {
   Dashboard: undefined;
   CareerRoadmap: undefined;
   GPSAttendance: undefined;
+  FaceIDAttendance: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -36,6 +38,10 @@ export default function AppNavigator() {
         <Stack.Screen 
           name="GPSAttendance" 
           component={GPSAttendanceScreen}
+        />
+        <Stack.Screen 
+          name="FaceIDAttendance" 
+          component={FaceIDAttendanceScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

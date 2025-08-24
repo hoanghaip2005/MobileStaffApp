@@ -22,13 +22,10 @@ import Svg, {
   LinearGradient,
   Stop,
 } from "react-native-svg";
-import { LinearGradient as ExpoLinearGradient } from "expo-linear-gradient";
 
 import { RootStackParamList } from "../navigation/AppNavigator";
 
 type NavigationProp = StackNavigationProp<RootStackParamList, "GPSAttendance">;
-
-const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {

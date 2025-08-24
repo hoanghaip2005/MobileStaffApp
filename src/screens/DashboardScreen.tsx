@@ -1097,6 +1097,7 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                         shadowOpacity: 0.05,
                         shadowRadius: 2,
                         elevation: 2,
+                        display: "none",
                       }}
                     >
                       <Svg width="25" height="24" viewBox="0 0 25 24" fill="none">
@@ -1133,86 +1134,90 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                   </TouchableOpacity>
 
                   {/* After button timekeeping FaceID */}
-                  <ExpoLinearGradient
-                    colors={["#00E1E1", "#24BABB"]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={{
-                      paddingHorizontal: 14,
-                      paddingVertical: 15,
-                      borderRadius: 8,
-                      gap: 8,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      // Shadow effect
-                      shadowColor: "#101828",
-                      shadowOffset: { width: 0, height: 1 },
-                      shadowOpacity: 0.05,
-                      shadowRadius: 2,
-                      elevation: 2,
-                      display: "none",
-                    }}
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('FaceIDAttendance')}
+                    activeOpacity={0.8}
                   >
-                    <Svg width="25" height="24" viewBox="0 0 25 24" fill="none">
-                      <Path
-                        d="M9.5 16C10.3504 16.6303 11.3846 17 12.5 17C13.6154 17 14.6496 16.6303 15.5 16"
-                        stroke="white"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                      />
-                      <Ellipse
-                        cx="15.5"
-                        cy="10.5"
-                        rx="1"
-                        ry="1.5"
-                        fill="white"
-                      />
-                      <Ellipse
-                        cx="9.5"
-                        cy="10.5"
-                        rx="1"
-                        ry="1.5"
-                        fill="white"
-                      />
-                      <Path
-                        d="M22.5 14C22.5 17.7712 22.5 19.6569 21.3284 20.8284C20.1569 22 18.2712 22 14.5 22"
-                        stroke="white"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                      />
-                      <Path
-                        d="M10.5 22C6.72876 22 4.84315 22 3.67157 20.8284C2.5 19.6569 2.5 17.7712 2.5 14"
-                        stroke="white"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                      />
-                      <Path
-                        d="M10.5 2C6.72876 2 4.84315 2 3.67157 3.17157C2.5 4.34315 2.5 6.22876 2.5 10"
-                        stroke="white"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                      />
-                      <Path
-                        d="M14.5 2C18.2712 2 20.1569 2 21.3284 3.17157C22.5 4.34315 22.5 6.22876 22.5 10"
-                        stroke="white"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                      />
-                    </Svg>
-
-                    <Text
+                    <ExpoLinearGradient
+                      colors={["#00E1E1", "#24BABB"]}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
                       style={{
-                        color: "#FFFFFF",
-                        fontSize: 20,
-                        lineHeight: 30,
-                        fontWeight: 500,
-                        fontFamily: FONTS.inter,
+                        paddingHorizontal: 14,
+                        paddingVertical: 15,
+                        borderRadius: 8,
+                        gap: 8,
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        // Shadow effect
+                        shadowColor: "#101828",
+                        shadowOffset: { width: 0, height: 1 },
+                        shadowOpacity: 0.05,
+                        shadowRadius: 2,
+                        elevation: 2,
                       }}
                     >
-                      Chấm công FaceID
-                    </Text>
-                  </ExpoLinearGradient>
+                      <Svg width="25" height="24" viewBox="0 0 25 24" fill="none">
+                        <Path
+                          d="M9.5 16C10.3504 16.6303 11.3846 17 12.5 17C13.6154 17 14.6496 16.6303 15.5 16"
+                          stroke="white"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                        />
+                        <Ellipse
+                          cx="15.5"
+                          cy="10.5"
+                          rx="1"
+                          ry="1.5"
+                          fill="white"
+                        />
+                        <Ellipse
+                          cx="9.5"
+                          cy="10.5"
+                          rx="1"
+                          ry="1.5"
+                          fill="white"
+                        />
+                        <Path
+                          d="M22.5 14C22.5 17.7712 22.5 19.6569 21.3284 20.8284C20.1569 22 18.2712 22 14.5 22"
+                          stroke="white"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                        />
+                        <Path
+                          d="M10.5 22C6.72876 22 4.84315 22 3.67157 20.8284C2.5 19.6569 2.5 17.7712 2.5 14"
+                          stroke="white"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                        />
+                        <Path
+                          d="M10.5 2C6.72876 2 4.84315 2 3.67157 3.17157C2.5 4.34315 2.5 6.22876 2.5 10"
+                          stroke="white"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                        />
+                        <Path
+                          d="M14.5 2C18.2712 2 20.1569 2 21.3284 3.17157C22.5 4.34315 22.5 6.22876 22.5 10"
+                          stroke="white"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                        />
+                      </Svg>
+
+                      <Text
+                        style={{
+                          color: "#FFFFFF",
+                          fontSize: 20,
+                          lineHeight: 30,
+                          fontWeight: 500,
+                          fontFamily: FONTS.inter,
+                        }}
+                      >
+                        Chấm công FaceID
+                      </Text>
+                    </ExpoLinearGradient>
+                  </TouchableOpacity>
 
                   <View
                     style={{
