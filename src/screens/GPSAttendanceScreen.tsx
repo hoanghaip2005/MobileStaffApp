@@ -88,6 +88,7 @@ export default function GPSAttendanceScreen() {
             alignItems: "center",
             paddingHorizontal: 16,
             paddingVertical: 8,
+            position: "relative",
           }}
         >
           <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -102,7 +103,9 @@ export default function GPSAttendanceScreen() {
           </Svg>
           <Text
             style={{
-              flex: 1,
+              position: "absolute",
+              left: 0,
+              right: 0,
               textAlign: "center",
               fontSize: 16,
               fontFamily: FONTS.interMedium,
