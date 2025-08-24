@@ -24,6 +24,85 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": ["expo-font"],
+    "fonts": [
+      {
+        "asset": "assets/fonts/Inter-Black.otf",
+        "family": "Inter-Black"
+      },
+      {
+        "asset": "assets/fonts/Inter-BlackItalic.otf",
+        "family": "Inter-BlackItalic"
+      },
+      {
+        "asset": "assets/fonts/Inter-Bold.otf",
+        "family": "Inter-Bold"
+      },
+      {
+        "asset": "assets/fonts/Inter-BoldItalic.otf",
+        "family": "Inter-BoldItalic"
+      },
+      {
+        "asset": "assets/fonts/Inter-ExtraBold.otf",
+        "family": "Inter-ExtraBold"
+      },
+      {
+        "asset": "assets/fonts/Inter-ExtraBoldItalic.otf",
+        "family": "Inter-ExtraBoldItalic"
+      },
+      {
+        "asset": "assets/fonts/Inter-ExtraLight-BETA.otf",
+        "family": "Inter-ExtraLight"
+      },
+      {
+        "asset": "assets/fonts/Inter-ExtraLightItalic-BETA.otf",
+        "family": "Inter-ExtraLightItalic"
+      },
+      {
+        "asset": "assets/fonts/Inter-Italic.otf",
+        "family": "Inter-Italic"
+      },
+      {
+        "asset": "assets/fonts/Inter-Light-BETA.otf",
+        "family": "Inter-Light"
+      },
+      {
+        "asset": "assets/fonts/Inter-LightItalic-BETA.otf",
+        "family": "Inter-LightItalic"
+      },
+      {
+        "asset": "assets/fonts/Inter-Medium.otf",
+        "family": "Inter-Medium"
+      },
+      {
+        "asset": "assets/fonts/Inter-MediumItalic.otf",
+        "family": "Inter-MediumItalic"
+      },
+      {
+        "asset": "assets/fonts/Inter-Regular.otf",
+        "family": "Inter-Regular"
+      },
+      {
+        "asset": "assets/fonts/Inter-SemiBold.otf",
+        "family": "Inter-SemiBold"
+      },
+      {
+        "asset": "assets/fonts/Inter-SemiBoldItalic.otf",
+        "family": "Inter-SemiBoldItalic"
+      },
+      {
+        "asset": "assets/fonts/Inter-Thin-BETA.otf",
+        "family": "Inter-Thin"
+      },
+      {
+        "asset": "assets/fonts/Inter-ThinItalic-BETA.otf",
+        "family": "Inter-ThinItalic"
+      },
+      {
+        "asset": "assets/fonts/SpaceMono-Regular.ttf",
+        "family": "SpaceMono-Regular"
+      }
+    ]
   }
 }
