@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   SafeAreaView,
   View,
@@ -29,7 +29,7 @@ import MaskedView from "@react-native-masked-view/masked-view";
 import { BulletList } from "../components/BulletList";
 import { RootStackParamList } from "../navigation/AppNavigator";
 
-type NavigationProp = StackNavigationProp<RootStackParamList, 'Dashboard'>;
+type NavigationProp = StackNavigationProp<RootStackParamList, "Dashboard">;
 
 interface DashboardScreenProps {
   // Add any props you need here
@@ -49,6 +49,23 @@ const COLORS = {
 const FONTS = {
   inter: "Inter",
   lexend: "Lexend",
+} as const;
+
+const FONTS1 = {
+  interMedium: "Inter-Medium",
+  interSemiBold: "Inter-SemiBold",
+  interBold: "Inter-Bold",
+  interBlack: "Inter-Black",
+  interBlackItalic: "Inter-BlackItalic",
+  interBoldItalic: "Inter-BoldItalic",
+  interExtraBold: "Inter-ExtraBold",
+  interExtraBoldItalic: "Inter-ExtraBoldItalic",
+  interExtraLight: "Inter-ExtraLight",
+  interExtraLightItalic: "Inter-ExtraLightItalic",
+  interLight: "Inter-Light",
+  interLightItalic: "Inter-LightItalic",
+  interMediumItalic: "Inter-MediumItalic",
+  interRegular: "Inter-Regular",
 } as const;
 
 const SIZES = {
@@ -832,6 +849,7 @@ const GradientText = ({
 
 export default function DashboardScreen(props: DashboardScreenProps) {
   const [showLocationPopup, setShowLocationPopup] = useState(false);
+  const [showQuickRequestPopup, setShowQuickRequestPopup] = useState(false);
   const navigation = useNavigation<NavigationProp>();
 
   const handleGPSAttendance = () => {
@@ -844,7 +862,26 @@ export default function DashboardScreen(props: DashboardScreenProps) {
 
   const handleGoToSettings = () => {
     setShowLocationPopup(false);
-    navigation.navigate('GPSAttendance');
+    navigation.navigate("GPSAttendance");
+  };
+
+  const quickRequestButtonRef = useRef<any>(null);
+  const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
+
+  const handleQuickRequest = () => {
+    if (quickRequestButtonRef.current) {
+      quickRequestButtonRef.current.measureInWindow((x: number, y: number, width: number, height: number) => {
+        setModalPosition({
+          top: y + height + 10,
+          left: x + width - 186, // 186 is modal width, right-align with button
+        });
+        setShowQuickRequestPopup(true);
+      });
+    }
+  };
+
+  const handleCloseQuickRequestPopup = () => {
+    setShowQuickRequestPopup(false);
   };
 
   return (
@@ -930,9 +967,9 @@ export default function DashboardScreen(props: DashboardScreenProps) {
             {/* Main Menu Container */}
             <View style={styles.frameContainerShadowA}>
               <View style={styles.frameContainerShadowB}>
-                <View style={styles.frameContainer}>
+                <View style={[styles.frameContainer, { gap: 16 }]}>
                   {/* Today's Schedule Section */}
-                  <View style={styles.frameItem}>
+                  <View style={{}}>
                     <View
                       style={{
                         flexDirection: "row",
@@ -1000,7 +1037,12 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                       }}
                     >
                       <Text style={styles.frameTitleBold}>08:00 - 16:00</Text>
-                      <Text style={styles.titleHref}>Yêu cầu nhanh</Text>
+                      <TouchableOpacity 
+                        ref={quickRequestButtonRef}
+                        onPress={handleQuickRequest}
+                      >
+                        <Text style={styles.titleHref}>Yêu cầu nhanh</Text>
+                      </TouchableOpacity>
                     </View>
 
                     {/* {Weather container} */}
@@ -1043,7 +1085,7 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                   </View>
 
                   {/* Countdown row: timer and message on the same line, centered */}
-                  <View
+                  {/* <View
                     style={{
                       flexDirection: "row",
                       alignItems: "center",
@@ -1055,7 +1097,6 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                       height: 68,
                       borderRadius: 4,
                       backgroundColor: "#F5F8FD",
-                      display: "none",
                     }}
                   >
                     <CountdownTimer
@@ -1075,10 +1116,10 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                         nữa tới giờ làm. Hãy chuẩn bị ngay
                       </Text>
                     </View>
-                  </View>
+                  </View> */}
 
                   {/* After countdown appear button timekeeping GPS */}
-                  <TouchableOpacity onPress={handleGPSAttendance}>
+                  {/* <TouchableOpacity onPress={handleGPSAttendance}>
                     <ExpoLinearGradient
                       colors={["#00E1E1", "#24BABB"]}
                       start={{ x: 0, y: 0 }}
@@ -1097,10 +1138,14 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                         shadowOpacity: 0.05,
                         shadowRadius: 2,
                         elevation: 2,
-                        display: "none",
                       }}
                     >
-                      <Svg width="25" height="24" viewBox="0 0 25 24" fill="none">
+                      <Svg
+                        width="25"
+                        height="24"
+                        viewBox="0 0 25 24"
+                        fill="none"
+                      >
                         <Path
                           d="M18.5 8L19.4487 8.31623C20.4387 8.64624 20.9337 8.81124 21.2169 9.20407C21.5 9.5969 21.5 10.1187 21.5 11.1623V16.829C21.5 18.1199 21.5 18.7653 21.1603 19.18C21.0449 19.3208 20.9048 19.4394 20.747 19.5301C20.2821 19.797 19.6455 19.6909 18.3721 19.4787C17.1157 19.2693 16.4875 19.1646 15.8648 19.2167C15.6463 19.235 15.4292 19.2676 15.215 19.3144C14.6046 19.4477 14.0299 19.735 12.8806 20.3097C11.3809 21.0596 10.631 21.4345 9.83284 21.5501C9.59242 21.5849 9.3498 21.6021 9.10688 21.6016C8.30035 21.6001 7.51186 21.3373 5.93488 20.8116L5.55132 20.6838C4.56129 20.3538 4.06627 20.1888 3.78314 19.7959C3.5 19.4031 3.5 18.8813 3.5 17.8377V12.908C3.5 11.2491 3.5 10.4197 3.98841 9.97358C4.07388 9.89552 4.16809 9.82762 4.26917 9.77122C4.84681 9.44894 5.63369 9.71123 7.20746 10.2358"
                           stroke="white"
@@ -1131,11 +1176,11 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                         Chấm công GPS
                       </Text>
                     </ExpoLinearGradient>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
 
                   {/* After button timekeeping FaceID */}
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('FaceIDAttendance')}
+                  {/* <TouchableOpacity
+                    onPress={() => navigation.navigate("FaceIDAttendance")}
                     activeOpacity={0.8}
                   >
                     <ExpoLinearGradient
@@ -1158,7 +1203,12 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                         elevation: 2,
                       }}
                     >
-                      <Svg width="25" height="24" viewBox="0 0 25 24" fill="none">
+                      <Svg
+                        width="25"
+                        height="24"
+                        viewBox="0 0 25 24"
+                        fill="none"
+                      >
                         <Path
                           d="M9.5 16C10.3504 16.6303 11.3846 17 12.5 17C13.6154 17 14.6496 16.6303 15.5 16"
                           stroke="white"
@@ -1217,7 +1267,132 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                         Chấm công FaceID
                       </Text>
                     </ExpoLinearGradient>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
+
+                  {/* Notification Chấm công */}
+                  <View
+                    style={{
+                      gap: 12,
+                      padding: 12,
+                      borderRadius: 12,
+                      backgroundColor: "#fff",
+                      borderWidth: 1,
+                      borderColor: "#F2F4F7",
+                    }}
+                  >
+                    {/* Notification timekeeping in */}
+                    <View style={{ gap: 6 }}>
+                      <Text
+                        style={{
+                          fontFamily: FONTS1.interMedium,
+                          fontSize: 14,
+                          color: "#667085",
+                        }}
+                      >
+                        Bạn đã chấm công vào lúc
+                      </Text>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontFamily: FONTS1.interBold,
+                            fontSize: 16,
+                            color: "#111927",
+                          }}
+                        >
+                          08:00 (Thứ 3 - 03/06/2025)
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: FONTS1.interSemiBold,
+                            fontSize: 14,
+                            color: "#fff",
+                            backgroundColor: "#3B76DA",
+                            borderRadius: 16,
+                            paddingVertical: 2,
+                            paddingLeft: 6,
+                            paddingRight: 8,
+                          }}
+                        >
+                          Đang làm
+                        </Text>
+                      </View>
+                    </View>
+
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: FONTS1.interMedium,
+                          fontWeight: 500,
+                          fontSize: 14,
+                          color: "#3B76DA",
+                          textDecorationLine: "underline",
+                        }}
+                      >
+                        Xem lịch sử
+                      </Text>
+                      <Svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                      >
+                        <Path
+                          d="M7.5 15L12.5 10L7.5 5"
+                          stroke="#B6BABA"
+                          strokeWidth="1.66667"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </Svg>
+                    </View>
+                  </View>
+
+                  {/* Button kết thúc ca */}
+                  <View>
+                    <TouchableOpacity
+                      onPress={() => navigation.goBack()}
+                      style={{
+                        backgroundColor: "#FFFFFF",
+                        paddingHorizontal: 14,
+                        paddingVertical: 10,
+                        borderRadius: 8,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderWidth: 1,
+                        borderColor: "#F79009",
+                        shadowColor: "#101828",
+                        shadowOffset: {
+                          width: 0,
+                          height: 0.1,
+                        },
+                        shadowOpacity: 0.01,
+                        shadowRadius: 1,
+                        elevation: 1,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: "#F79009",
+                          fontFamily: FONTS1.interMedium,
+                          fontSize: 14,
+                        }}
+                      >
+                        Kết thúc ca
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
 
                   <View
                     style={{
@@ -1225,8 +1400,6 @@ export default function DashboardScreen(props: DashboardScreenProps) {
                       width: "100%",
                       backgroundColor: "#E0E0E0",
                       alignSelf: "stretch",
-                      marginTop: 16,
-                      marginBottom: 16,
                     }}
                   />
 
@@ -2213,7 +2386,7 @@ export default function DashboardScreen(props: DashboardScreenProps) {
             </View>
           </View>
         </View>
-        
+
         {/* Popup Modal */}
         <Modal
           visible={showLocationPopup}
@@ -2392,6 +2565,131 @@ export default function DashboardScreen(props: DashboardScreenProps) {
               </View>
             </View>
           </View>
+        </Modal>
+
+        {/* Quick Request Popup Modal */}
+        <Modal
+          visible={showQuickRequestPopup}
+          transparent={true}
+          animationType="fade"
+          onRequestClose={handleCloseQuickRequestPopup}
+        >
+          <TouchableOpacity 
+            style={{ flex: 1, }}
+            activeOpacity={1}
+            onPress={handleCloseQuickRequestPopup}
+          >
+            <View
+              style={{
+                position: 'absolute',
+                top: modalPosition.top,
+                left: modalPosition.left,
+                backgroundColor: COLORS.white,
+                borderRadius: 8,
+                padding: 12,
+                width: 186,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+              }}
+            >
+            {/* Request Options */}
+            <View style={{ }}>
+              <TouchableOpacity
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomColor: "#E0E0E0",
+                  paddingBottom: 8,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 14,
+                    color: "#111927",
+                    fontFamily: FONTS.inter,
+                  }}
+                >
+                  Xin đi trễ
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  paddingVertical: 8,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "#E0E0E0",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 14,
+                    color: "#111927",
+                    fontFamily: FONTS.inter,
+                  }}
+                >
+                  Xin nghỉ đột xuất
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  paddingVertical: 8,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "#E0E0E0",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 14,
+                    color: "#111927",
+                    fontFamily: FONTS.inter,
+                  }}
+                >
+                  Xin đổi ca
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  paddingVertical: 8,
+                  borderBottomWidth: 1,
+                  borderBottomColor: "#E0E0E0",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 14,
+                    color: "#111927",
+                    fontFamily: FONTS.inter,
+                  }}
+                >
+                  Xin tăng ca
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  paddingTop: 8,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 14,
+                    color: "#111927",
+                    fontFamily: FONTS.inter,
+                  }}
+                >
+                  Xin về sớm
+                </Text>
+              </TouchableOpacity>
+            </View>
+            </View>
+          </TouchableOpacity>
         </Modal>
       </ScrollView>
     </SafeAreaView>
