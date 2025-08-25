@@ -461,7 +461,11 @@ export default function FaceIDAttendanceScreen() {
           </Text>
         </TouchableOpacity>
       </View>
+
+      
     </View>
+
+    
   );
 }
 
